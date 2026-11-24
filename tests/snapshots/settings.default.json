@@ -1,0 +1,50 @@
+{
+  "Language": "es",
+  "DataFolder": "",
+  "Server": "",
+  "Port": 0,
+  "UseLdaps": false,
+  "Domain": "",
+  "MasterOU": "",
+  "UsersOU": "",
+  "ComputersOU": "",
+  "DisabledOU": "",
+  "IncludeSubOUs": true,
+  "RequireTicket": true,
+  "Naming": {
+    "SamPattern": "U{seq:5}",
+    "SamFirstNumber": 1,
+    "ComputerPattern": "PC{seq:5}",
+    "ComputerFirstNumber": 1,
+    "MailPattern": "{given1}.{surname1}",
+    "MailFallbacks": [
+      "{given1}.{surname1}{s2}",
+      "{given1}.{surname1}{n}"
+    ],
+    "MailDomain": "",
+    "SetProxyAddresses": false,
+    "UpnPattern": "{sam}@{upnSuffix}",
+    "UpnSuffix": "",
+    "CnPattern": "{Given} {Surnames}",
+    "DisplayNamePattern": "{Given} {Surnames}",
+    "SurnamePattern": "{Surnames}"
+  },
+  "Password": {
+    "Generate": true,
+    "Length": 16,
+    "MinimumLength": 12
+  },
+  "Offboarding": {
+    "DescriptionPattern": "Disabled {date} | {ticket} | {reason} | {operator}"
+  },
+  "Report": {
+    "InactiveDays": 90,
+    "ExpiryWarningDays": 14,
+    "BadPasswordThreshold": 3,
+    "MachinePasswordMaxDays": 60,
+    "QueryAllDCs": false
+  },
+  "DefaultComputerGroups": [],
+  "ExtraProtectedGroups": [],
+  "ProfilesFile": "Profiles/profiles.json"
+}

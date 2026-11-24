@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Deckside.Core/Deckside.Core.csproj" />
+    <Project Path="src/Deckside.Directory/Deckside.Directory.csproj" />
+    <Project Path="src/Deckside.App/Deckside.App.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Deckside.Tests/Deckside.Tests.csproj" />
+  </Folder>
+</Solution>

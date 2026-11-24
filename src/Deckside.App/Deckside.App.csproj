@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- The window. No logic here: it calls Core, Directory and (later) Operations. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <RootNamespace>Deckside.App</RootNamespace>
+    <AssemblyName>Deckside</AssemblyName>
+  </PropertyGroup>
+  <!-- dotnet publish src/Deckside.App -c Release -o publish  =>  one self-contained Deckside.exe -->
+  <PropertyGroup Condition="'$(_IsPublishing)' == 'true'">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ui.es.tsv" LogicalName="Deckside.App.ui.es.tsv" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Deckside.Core\Deckside.Core.csproj" />
+    <ProjectReference Include="..\Deckside.Directory\Deckside.Directory.csproj" />
+  </ItemGroup>
+</Project>

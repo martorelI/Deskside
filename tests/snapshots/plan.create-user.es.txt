@@ -1,0 +1,27 @@
+Alta de usuario
+OU destino: OU=Staff,OU=Deckside Test,DC=example,DC=local
+DN: CN=José Luis Peña Gómez,OU=Staff,OU=Deckside Test,DC=example,DC=local
+Atributos
+  objectClass = user
+  cn = José Luis Peña Gómez
+  sAMAccountName = U00051
+  userPrincipalName = U00051@example.local
+  givenName = José Luis
+  sn = Peña Gómez
+  displayName = José Luis Peña Gómez
+  mail = jose.pena@example.local
+  employeeID = E-1001
+  department = Finance
+  title = Analyst
+  telephoneNumber = +52 55 0000 0000
+  userAccountControl = 514
+Grupos a agregar (2)
+  + CN=GG-Accounting,OU=Groups,OU=Deckside Test,DC=example,DC=local
+  + CN=GG-VPN,OU=Groups,OU=Deckside Test,DC=example,DC=local
+Pasos
+  1. Crear la cuenta deshabilitada (userAccountControl = 514).
+  2. Poner la contrasena inicial (conexion cifrada; nunca se registra).
+  3. El usuario debe cambiar la contrasena al iniciar sesion (pwdLastSet = 0).
+  4. Habilitar la cuenta (userAccountControl = 512).
+  5. Agregarla a los grupos.
+NOTA [SEQUENCE_PREVIOUS] El ultimo numero era U00050 (CN=Outside Scope,OU=Other,DC=example,DC=local).

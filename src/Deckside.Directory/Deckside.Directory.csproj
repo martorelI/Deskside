@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Access to Active Directory over LDAP, behind IDirectory. Every write goes through GuardedDirectory. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Deckside.Directory</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.DirectoryServices.Protocols" Version="10.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Deckside.Core\Deckside.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Deckside.Tests" />
+  </ItemGroup>
+</Project>

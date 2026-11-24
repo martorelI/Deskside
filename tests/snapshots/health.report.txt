@@ -1,0 +1,36 @@
+Health report 2026-11-24 15:00 UTC
+
+Users: OU=Staff,OU=Deckside Test,DC=example,DC=local
+Objects: 8
+With problems: 7
+    DISABLED                1
+    ACCOUNT_EXPIRED         1
+    ACCOUNT_EXPIRING        1
+    PASSWORD_EXPIRED        1
+    PASSWORD_EXPIRING       1
+    PASSWORD_MUST_CHANGE    1
+    PASSWORD_NEVER_EXPIRES  1
+    PASSWORD_NOT_REQUIRED   1
+    INACTIVE                2
+    NEVER_LOGGED_ON         1
+    LOCKED_OUT              2
+    BAD_PASSWORDS           1
+  - U00001 | OK | last logon: 2026-11-21 | password age: 10
+  - U00002 | INACTIVE | last logon: 2026-08-21 | password age: 50
+  - U00003 | PASSWORD_MUST_CHANGE, NEVER_LOGGED_ON | last logon: - | password age: -
+  - U00004 | LOCKED_OUT, BAD_PASSWORDS | last logon: 2026-11-23 | password age: 5
+  - U00005 | PASSWORD_EXPIRED | last logon: 2026-11-23 | password age: 100
+  - U00006 | ACCOUNT_EXPIRING, PASSWORD_EXPIRING, PASSWORD_NEVER_EXPIRES | last logon: 2026-11-23 | password age: 80
+  - U00007 | DISABLED, ACCOUNT_EXPIRED, PASSWORD_NOT_REQUIRED, INACTIVE | last logon: 2026-05-08 | password age: 200
+  - U00008 | LOCKED_OUT | last logon: 2026-11-23 | password age: 5
+
+Computers: OU=Workstations,OU=Deckside Test,DC=example,DC=local
+Objects: 3
+With problems: 2
+    DISABLED                0
+    INACTIVE                1
+    NEVER_LOGGED_ON         1
+    MACHINE_PASSWORD_OLD    1
+  - PC00001$ | OK | last logon: 2026-11-22 | password age: 12
+  - PC00002$ | INACTIVE, MACHINE_PASSWORD_OLD | last logon: 2026-06-27 | password age: 150
+  - PC00003$ | NEVER_LOGGED_ON | last logon: - | password age: 1

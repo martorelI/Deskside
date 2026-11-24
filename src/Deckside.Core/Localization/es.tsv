@@ -1,0 +1,71 @@
+# Spanish texts of Deckside.Core: English<TAB>Spanish (no accents, as in Rackside's es.tsv).
+Account	Cuenta
+Add it to the groups.	Agregarla a los grupos.
+An object already exists with the DN {0}	Ya existe un objeto con el DN {0}
+Assign / change profile	Asignar / cambiar perfil
+Attributes	Atributos
+Choose at least one profile.	Elige al menos un perfil.
+Computers	Equipos
+Create computer	Alta de equipo
+Create the account disabled (userAccountControl = 514).	Crear la cuenta deshabilitada (userAccountControl = 514).
+Create user	Alta de usuario
+Deckside does not write the attribute {0}.	Deckside no escribe el atributo {0}.
+Disable and move	Deshabilitar y mover
+Enable the account (userAccountControl = 512).	Habilitar la cuenta (userAccountControl = 512).
+ERROR	ERROR
+Given name and first surname are required.	El nombre y el primer apellido son obligatorios.
+Group not found: {0}	No se encontro el grupo: {0}
+Groups before	Grupos que tenia
+Groups kept	Grupos que se conservan
+Groups to add	Grupos a agregar
+Groups to remove	Grupos a quitar
+Health report	Reporte de salud
+Invalid account name: {0}	Nombre de cuenta invalido: {0}
+Invalid computer name (up to 15 letters, digits or '-'): {0}	Nombre de equipo invalido (hasta 15 letras, digitos o '-'): {0}
+Invalid group DN: {0}	DN de grupo invalido: {0}
+last logon	ultimo inicio de sesion
+Move to	Mover a
+No e-mail address could be built: {0}	No se pudo armar un correo: {0}
+NOTE	NOTA
+Objects	Objetos
+Other groups (not managed, untouched)	Otros grupos (no administrados, no se tocan)
+password age	edad de la contrasena
+Profile not found: {0}	No se encontro el perfil: {0}
+Profiles	Perfiles
+Protected account (adminCount or built-in), Deckside never changes it: {0}	Cuenta protegida (adminCount o integrada), Deckside nunca la modifica: {0}
+Protected group, Deckside never changes its members: {0}	Grupo protegido, Deckside nunca cambia sus miembros: {0}
+Protected group, it is not removed: {0}	Grupo protegido, no se quita: {0}
+Set the initial password (encrypted connection; it is never logged).	Poner la contrasena inicial (conexion cifrada; nunca se registra).
+Steps	Pasos
+Target OU	OU destino
+The account is already in the disabled OU.	La cuenta ya esta en la OU de deshabilitados.
+The account is outside the users OU, it can be read but not changed: {0}	La cuenta esta fuera de la OU de usuarios: se puede leer, pero no modificar: {0}
+The account was already disabled; it is only moved.	La cuenta ya estaba deshabilitada; solo se mueve.
+The computer name is already used in the domain: {0}	El nombre de equipo ya existe en el dominio: {0}
+The computers OU is not configured (or it is outside the master OU).	La OU de equipos no esta configurada (o esta fuera de la OU maestra).
+The domain (or the e-mail domain / UPN suffix) is not configured.	El dominio (o el dominio de correo / sufijo UPN) no esta configurado.
+The group could not be read, it is not removed: {0}	No se pudo leer el grupo, no se quita: {0}
+The group is outside the master OU, Deckside does not change it: {0}	El grupo esta fuera de la OU maestra, Deckside no lo modifica: {0}
+The last number was {0} ({1}).	El ultimo numero era {0} ({1}).
+The manager must be the DN of a user: {0}	El jefe debe ser el DN de un usuario: {0}
+The master OU, the users OU and the disabled OU must be configured.	Hay que configurar la OU maestra, la de usuarios y la de deshabilitados.
+The name has characters that are not letters: {0}	El nombre tiene caracteres que no son letras: {0}
+The name {0} already exists in the domain; using {1}.	El nombre {0} ya existe en el dominio; se usa {1}.
+The object already has exactly the groups of the profile.	El objeto ya tiene exactamente los grupos del perfil.
+The object is outside the configured OU, it can be read but not changed: {0}	El objeto esta fuera de la OU configurada: se puede leer, pero no modificar: {0}
+The profile {0} is not for this kind of object.	El perfil {0} no es para este tipo de objeto.
+The reason is required.	El motivo es obligatorio.
+The target OU is outside the computers OU: {0}	La OU destino esta fuera de la OU de equipos: {0}
+The target OU is outside the users OU: {0}	La OU destino esta fuera de la OU de usuarios: {0}
+The ticket is required.	El ticket es obligatorio.
+The UPN is already used: {0}	El UPN ya esta en uso: {0}
+The users OU is not configured (or it is outside the master OU).	La OU de usuarios no esta configurada (o esta fuera de la OU maestra).
+There are no more numbers in the pattern {0}.	Ya no quedan numeros en el patron {0}.
+User must change the password at next logon (pwdLastSet = 0).	El usuario debe cambiar la contrasena al iniciar sesion (pwdLastSet = 0).
+Users	Usuarios
+WARNING	AVISO
+With problems	Con problemas
+{0} is longer than {1} characters.	{0} tiene mas de {1} caracteres.
+{0} is not a user account.	{0} no es una cuenta de usuario.
+{0} numbers were already taken and were skipped.	{0} numeros ya estaban ocupados y se saltaron.
+{0} was taken; using {1}.	{0} ya estaba ocupado; se usa {1}.

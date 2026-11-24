@@ -1,0 +1,89 @@
+# Spanish texts of the window: English<TAB>Spanish (with accents).
+0 = default (389 / 636)	0 = predeterminado (389 / 636)
+A ticket is required for every change	Cada cambio requiere un ticket
+About	Acerca de
+Account	Cuenta
+Another account	Otra cuenta
+Authenticate with	Autenticar con
+Author: {0}	Autor: {0}
+Check the master OU	Verificar la OU maestra
+Coming in a next phase.	Llega en una próxima fase.
+Computers	Equipos
+Computers OU	OU de equipos
+Connect	Conectar
+Connect to the domain	Conectar al dominio
+Connecting to {0}...	Conectando a {0}...
+Could not connect to the server.	No se pudo conectar al servidor.
+Could not save the settings: {0}	No se pudieron guardar los ajustes: {0}
+Credentials are never saved. The naming rules of users and computers will be configured here too.	Las credenciales nunca se guardan. Aquí también se configurarán las reglas para formar los nombres de usuarios y equipos.
+Deckside never changes that attribute.	Deckside nunca modifica ese atributo.
+Description	Descripción
+Disabled	Deshabilitada
+Disabled OU	OU de deshabilitados
+Domain	Dominio
+Empty = taken from the master OU.	Vacío = se toma de la OU maestra.
+Enabled	Habilitada
+Exit	Salir
+Expired, inactive, locked-out objects and password problems of the users and computers OUs, with Excel export. Read only.	Objetos caducados, inactivos, bloqueados y problemas de contraseña de las OUs de usuarios y equipos, con exportación a Excel. Solo lectura.
+Find an employee, check whether the account is still active, then disable it and move it to the disabled OU. Every change is previewed, confirmed and recorded.	Busca a un empleado, revisa si su cuenta sigue activa, y luego deshabilítala y muévela a la OU de deshabilitados. Cada cambio se previsualiza, se confirma y queda registrado.
+Group templates to assign or change on users and computers. Only groups of the profiles inside the master OU are changed.	Plantillas de grupos para asignar o cambiar a usuarios y equipos. Solo se modifican los grupos de los perfiles que están dentro de la OU maestra.
+Health report	Reporte de salud
+Include sub-OUs of the users and computers OUs	Incluir las sub-OUs de las OUs de usuarios y equipos
+is inside the users OU (disabled users would stay in scope)	está dentro de la OU de usuarios (los deshabilitados seguirían en alcance)
+is not in the domain	no está en el dominio
+is not valid JSON, defaults are used	no es JSON válido, se usan los valores predeterminados
+is not valid, the default is used	no es válido, se usa el valor predeterminado
+is outside the master OU, it was cleared	está fuera de la OU maestra, se vació
+is unknown and ignored	es desconocido y se ignora
+Language	Idioma
+Last logon	Último inicio de sesión
+Manages users and computers of Active Directory only inside a master OU. Every change is previewed, confirmed and recorded; nothing is deleted.	Administra usuarios y equipos de Active Directory solo dentro de una OU maestra. Cada cambio se previsualiza, se confirma y queda registrado; nada se borra.
+Master OU	OU maestra
+Microsoft, Windows and Active Directory are trademarks of Microsoft Corporation. Deckside is independent and is not affiliated with, sponsored or endorsed by Microsoft; the names are used only to indicate compatibility.	Microsoft, Windows y Active Directory son marcas de Microsoft Corporation. Deckside es independiente: no está afiliado, patrocinado ni respaldado por Microsoft; los nombres se usan solo para indicar compatibilidad.
+My Windows session	Mi sesión de Windows
+my Windows session	mi sesión de Windows
+Name	Nombre
+needs a master OU first, it was cleared	primero necesita una OU maestra, se vació
+New computer...	Nuevo equipo...
+New user...	Nuevo usuario...
+none	ninguno
+not configured	sin configurar
+Nothing is ever created, changed or moved outside this OU, including group memberships.	Nunca se crea, modifica ni mueve nada fuera de esta OU, incluida la membresía de grupos.
+Offboarding	Bajas
+Operating system	Sistema operativo
+OU: {0}	OU: {0}
+Outside the master OU: Deckside does not change it.	Fuera de la OU maestra: Deckside no lo modifica.
+Password	Contraseña
+Port	Puerto
+Profiles	Perfiles
+Reading...	Leyendo...
+Refresh	Actualizar
+Remember the server	Recordar el servidor
+Save	Guardar
+Saved, with warnings:	Guardado, con avisos:
+Saved.	Guardado.
+Server (IP or name)	Servidor (IP o nombre)
+Server: {0}{1}  ·  Account: {2}  ·  Encryption: {3}  ·  Master OU: {4}	Servidor: {0}{1}  ·  Cuenta: {2}  ·  Cifrado: {3}  ·  OU maestra: {4}
+Settings	Ajustes
+signing and sealing	firma y sellado
+State	Estado
+The account or the password is not correct.	La cuenta o la contraseña no son correctas.
+The connection is not encrypted, so it was refused.	La conexión no está cifrada, por eso se rechazó.
+The data folders (records, reports, exports) contain personal data. Protecting them is the responsibility of the operator.	Las carpetas de datos (registros, reportes, exportaciones) contienen datos personales. Protegerlas es responsabilidad del operador.
+The master OU does not belong to the connected domain: nothing can be changed.	La OU maestra no pertenece al dominio conectado: no se puede modificar nada.
+The master OU does not exist in the directory: nothing can be changed.	La OU maestra no existe en el directorio: no se puede modificar nada.
+The master OU exists in {0} and holds {1} users, computers and groups.	La OU maestra existe en {0} y contiene {1} usuarios, equipos y grupos.
+The master OU is not a valid DN.	La OU maestra no es un DN válido.
+The master OU is not configured: nothing can be changed until it is set in Settings.	La OU maestra no está configurada: no se puede modificar nada hasta definirla en Ajustes.
+The OU is not configured (or it is outside the master OU). Set it in Settings.	La OU no está configurada (o está fuera de la OU maestra). Configúrala en Ajustes.
+Those account flags are not allowed.	Esas opciones de cuenta no están permitidas.
+Type the account and the password.	Escribe la cuenta y la contraseña.
+Type the IP address or the name of a domain controller.	Escribe la IP o el nombre de un controlador de dominio.
+Use LDAPS (certificate)	Usar LDAPS (certificado)
+Used at the next start (the login window proposes it).	Se usa en el próximo inicio (la ventana de conexión lo propone).
+Users	Usuarios
+Users OU	OU de usuarios
+Warnings:	Avisos:
+With an IP address Windows usually authenticates with NTLM instead of Kerberos; the connection is still signed and sealed.	Con una IP, Windows suele autenticar con NTLM en lugar de Kerberos; la conexión sigue firmada y sellada.
+With LDAPS and an IP address, the certificate of the DC must include that IP.	Con LDAPS y una IP, el certificado del DC debe incluir esa IP.
+{0} objects	{0} objetos

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Pure logic: no I/O against the directory, no UI. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Deckside.Core</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\es.tsv" LogicalName="Deckside.Core.es.tsv" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Deckside.Tests" />
+  </ItemGroup>
+</Project>

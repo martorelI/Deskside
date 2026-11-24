@@ -1,0 +1,27 @@
+Create user
+Target OU: OU=Staff,OU=Deckside Test,DC=example,DC=local
+DN: CN=José Luis Peña Gómez,OU=Staff,OU=Deckside Test,DC=example,DC=local
+Attributes
+  objectClass = user
+  cn = José Luis Peña Gómez
+  sAMAccountName = U00051
+  userPrincipalName = U00051@example.local
+  givenName = José Luis
+  sn = Peña Gómez
+  displayName = José Luis Peña Gómez
+  mail = jose.pena@example.local
+  employeeID = E-1001
+  department = Finance
+  title = Analyst
+  telephoneNumber = +52 55 0000 0000
+  userAccountControl = 514
+Groups to add (2)
+  + CN=GG-Accounting,OU=Groups,OU=Deckside Test,DC=example,DC=local
+  + CN=GG-VPN,OU=Groups,OU=Deckside Test,DC=example,DC=local
+Steps
+  1. Create the account disabled (userAccountControl = 514).
+  2. Set the initial password (encrypted connection; it is never logged).
+  3. User must change the password at next logon (pwdLastSet = 0).
+  4. Enable the account (userAccountControl = 512).
+  5. Add it to the groups.
+NOTE [SEQUENCE_PREVIOUS] The last number was U00050 (CN=Outside Scope,OU=Other,DC=example,DC=local).

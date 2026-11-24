@@ -1,0 +1,13 @@
+Create computer
+Target OU: OU=Workstations,OU=Deckside Test,DC=example,DC=local
+DN: CN=PC00021,OU=Workstations,OU=Deckside Test,DC=example,DC=local
+Attributes
+  objectClass = computer
+  cn = PC00021
+  sAMAccountName = PC00021$
+  userAccountControl = 4128
+  description = Front desk
+Groups to add (2)
+  + CN=GG-Printers,OU=Groups,OU=Deckside Test,DC=example,DC=local
+  + CN=GG-Kiosk,OU=Groups,OU=Deckside Test,DC=example,DC=local
+NOTE [SEQUENCE_PREVIOUS] The last number was PC00020 (CN=PC00020,OU=Servers,DC=example,DC=local).

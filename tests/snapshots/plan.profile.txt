@@ -1,0 +1,12 @@
+Assign / change profile
+Account: U00041
+DN: CN=Carla Mendez,OU=Sales,OU=Staff,OU=Deckside Test,DC=example,DC=local
+Profiles: Accounting
+Groups to add (2)
+  + CN=GG-Accounting,OU=Groups,OU=Deckside Test,DC=example,DC=local
+  + CN=GG-VPN,OU=Groups,OU=Deckside Test,DC=example,DC=local
+Groups to remove (1)
+  - CN=GG-Warehouse,OU=Groups,OU=Deckside Test,DC=example,DC=local
+Groups kept (0)
+Other groups (not managed, untouched) (1)
+  · CN=GG-Projects,OU=Groups,OU=Deckside Test,DC=example,DC=local
