@@ -5,7 +5,7 @@
     <RootNamespace>Deckside.Core</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Localization\es.tsv" LogicalName="Deckside.Core.es.tsv" />
+    <EmbeddedResource Include="Localization\es.tsv" LogicalName="Deckside.Core.es.tsv" WithCulture="false" />
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Deckside.Tests" />

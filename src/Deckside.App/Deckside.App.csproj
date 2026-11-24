@@ -17,7 +17,8 @@
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\ui.es.tsv" LogicalName="Deckside.App.ui.es.tsv" />
+    <!-- WithCulture=false: otherwise MSBuild reads "ui.es.tsv" as a Spanish satellite resource and leaves it out of Deckside.dll. -->
+    <EmbeddedResource Include="Resources\ui.es.tsv" LogicalName="Deckside.App.ui.es.tsv" WithCulture="false" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Deckside.Core\Deckside.Core.csproj" />
