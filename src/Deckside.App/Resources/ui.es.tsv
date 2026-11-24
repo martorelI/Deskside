@@ -1,18 +1,24 @@
 # Spanish texts of the window: English<TAB>Spanish (with accents).
 0 = default (389 / 636)	0 = predeterminado (389 / 636)
+A query is running. Close anyway?	Hay una consulta en curso. ¿Cerrar de todos modos?
 A ticket is required for every change	Cada cambio requiere un ticket
 About	Acerca de
 Account	Cuenta
+already expired	ya caducó
 Another account	Otra cuenta
+Application	Aplicación
 Authenticate with	Autenticar con
-Author: {0}	Autor: {0}
 Check the master OU	Verificar la OU maestra
-Coming in a next phase.	Llega en una próxima fase.
+Checking the master OU...	Verificando la OU maestra...
+Coming in a next phase	Llega en una próxima fase
+Computer	Equipo
 Computers	Equipos
 Computers OU	OU de equipos
 Connect	Conectar
 Connect to the domain	Conectar al dominio
 Connecting to {0}...	Conectando a {0}...
+Connection	Conexión
+Copy	Copiar
 Could not connect to the server.	No se pudo conectar al servidor.
 Could not save the settings: {0}	No se pudieron guardar los ajustes: {0}
 Credentials are never saved. The naming rules of users and computers will be configured here too.	Las credenciales nunca se guardan. Aquí también se configurarán las reglas para formar los nombres de usuarios y equipos.
@@ -21,13 +27,21 @@ Description	Descripción
 Disabled	Deshabilitada
 Disabled OU	OU de deshabilitados
 Domain	Dominio
-Empty = taken from the master OU.	Vacío = se toma de la OU maestra.
+Domain: empty = taken from the master OU.	Dominio: vacío = se toma de la OU maestra.
 Enabled	Habilitada
+Encrypted Windows LAPS passwords are decrypted with your Windows session (not the account typed at login): it must be an authorized decryptor.	Las contraseñas cifradas de Windows LAPS se descifran con tu sesión de Windows (no con la cuenta tecleada al conectar): debe ser un descifrador autorizado.
+Every change will be previewed, confirmed and recorded, and only inside the master OU.	Cada cambio se previsualizará, se confirmará y quedará registrado, y solo dentro de la OU maestra.
 Exit	Salir
-Expired, inactive, locked-out objects and password problems of the users and computers OUs, with Excel export. Read only.	Objetos caducados, inactivos, bloqueados y problemas de contraseña de las OUs de usuarios y equipos, con exportación a Excel. Solo lectura.
-Find an employee, check whether the account is still active, then disable it and move it to the disabled OU. Every change is previewed, confirmed and recorded.	Busca a un empleado, revisa si su cuenta sigue activa, y luego deshabilítala y muévela a la OU de deshabilitados. Cada cambio se previsualiza, se confirma y queda registrado.
-Group templates to assign or change on users and computers. Only groups of the profiles inside the master OU are changed.	Plantillas de grupos para asignar o cambiar a usuarios y equipos. Solo se modifican los grupos de los perfiles que están dentro de la OU maestra.
+Expired, inactive, locked-out objects and password problems of the users and computers OUs, with Excel export.	Objetos caducados, inactivos, bloqueados y problemas de contraseña de las OUs de usuarios y equipos, con exportación a Excel.
+Expires	Caduca
+Filter by account, name or description...	Filtrar por cuenta, nombre o descripción...
+Find an employee, check whether the account is still active, then disable it and move it to the disabled OU.	Busca a un empleado, revisa si su cuenta sigue activa, y luego deshabilítala y muévela a la OU de deshabilitados.
+General	General
+Get password	Obtener contraseña
+Group templates to assign or change on users and computers, only with groups inside the master OU.	Plantillas de grupos para asignar o cambiar a usuarios y equipos, solo con grupos dentro de la OU maestra.
 Health report	Reporte de salud
+Hide	Ocultar
+in {0} days	en {0} días
 Include sub-OUs of the users and computers OUs	Incluir las sub-OUs de las OUs de usuarios y equipos
 is inside the users OU (disabled users would stay in scope)	está dentro de la OU de usuarios (los deshabilitados seguirían en alcance)
 is not in the domain	no está en el dominio
@@ -36,54 +50,91 @@ is not valid, the default is used	no es válido, se usa el valor predeterminado
 is outside the master OU, it was cleared	está fuera de la OU maestra, se vació
 is unknown and ignored	es desconocido y se ignora
 Language	Idioma
+Last change	Último cambio
 Last logon	Último inicio de sesión
+Legacy LAPS	LAPS heredado
+Local administrator password of a computer (Windows LAPS and legacy LAPS). Read only.	Contraseña del administrador local de un equipo (Windows LAPS y LAPS heredado). Solo lectura.
+Looking for {0}...	Buscando {0}...
 Manages users and computers of Active Directory only inside a master OU. Every change is previewed, confirmed and recorded; nothing is deleted.	Administra usuarios y equipos de Active Directory solo dentro de una OU maestra. Cada cambio se previsualiza, se confirma y queda registrado; nada se borra.
 Master OU	OU maestra
+Master OU checked.	OU maestra verificada.
 Microsoft, Windows and Active Directory are trademarks of Microsoft Corporation. Deckside is independent and is not affiliated with, sponsored or endorsed by Microsoft; the names are used only to indicate compatibility.	Microsoft, Windows y Active Directory son marcas de Microsoft Corporation. Deckside es independiente: no está afiliado, patrocinado ni respaldado por Microsoft; los nombres se usan solo para indicar compatibilidad.
 My Windows session	Mi sesión de Windows
 my Windows session	mi sesión de Windows
 Name	Nombre
+Name, NAME$ or full DNS name. It is searched in the whole domain; AD only returns the password if your account may read it.	Nombre, NOMBRE$ o nombre DNS completo. Se busca en todo el dominio; AD solo devuelve la contraseña si tu cuenta puede leerla.
 needs a master OU first, it was cleared	primero necesita una OU maestra, se vació
 New computer...	Nuevo equipo...
 New user...	Nuevo usuario...
+No computer named {0} was found in {1}.	No se encontró ningún equipo llamado {0} en {1}.
+No LAPS password: the computer does not use LAPS, or your account may not read it.	Sin contraseña LAPS: el equipo no usa LAPS o tu cuenta no puede leerla.
 none	ninguno
-not configured	sin configurar
-Nothing is ever created, changed or moved outside this OU, including group memberships.	Nunca se crea, modifica ni mueve nada fuera de esta OU, incluida la membresía de grupos.
+Nothing is ever created, changed or moved outside the master OU, including group memberships. The other OUs must be inside it.	Nunca se crea, modifica ni mueve nada fuera de la OU maestra, incluida la membresía de grupos. Las demás OUs deben estar dentro de ella.
 Offboarding	Bajas
 Operating system	Sistema operativo
-OU: {0}	OU: {0}
 Outside the master OU: Deckside does not change it.	Fuera de la OU maestra: Deckside no lo modifica.
 Password	Contraseña
+Password copied. The clipboard is cleared in {0} seconds.	Contraseña copiada. El portapapeles se vacía en {0} segundos.
+Password of {0} read.	Contraseña de {0} leída.
+Password of {0} read. It is not saved anywhere.	Contraseña de {0} leída. No se guarda en ningún lado.
+Personal data	Datos personales
 Port	Puerto
 Profiles	Perfiles
-Reading...	Leyendo...
+Read only. OU: {0}	Solo lectura. OU: {0}
+Reading the directory...	Leyendo el directorio...
+Ready.	Listo.
 Refresh	Actualizar
 Remember the server	Recordar el servidor
+Result	Resultado
 Save	Guardar
-Saved, with warnings:	Guardado, con avisos:
+Saved, with warnings (see below).	Guardado, con avisos (ver abajo).
 Saved.	Guardado.
+Scope	Alcance
 Server (IP or name)	Servidor (IP o nombre)
-Server: {0}{1}  ·  Account: {2}  ·  Encryption: {3}  ·  Master OU: {4}	Servidor: {0}{1}  ·  Cuenta: {2}  ·  Cifrado: {3}  ·  OU maestra: {4}
+Set the OU in Settings to see its objects.	Configura la OU en Ajustes para ver sus objetos.
 Settings	Ajustes
+Settings saved.	Ajustes guardados.
+Show	Mostrar
 signing and sealing	firma y sellado
+Source	Origen
 State	Estado
+Stop	Detener
+Stopped by the operator.	Detenido por el operador.
 The account or the password is not correct.	La cuenta o la contraseña no son correctas.
+The connection is always encrypted: LDAPS, or signing and sealing on port 389.	La conexión siempre va cifrada: LDAPS, o firma y sellado en el puerto 389.
 The connection is not encrypted, so it was refused.	La conexión no está cifrada, por eso se rechazó.
-The data folders (records, reports, exports) contain personal data. Protecting them is the responsibility of the operator.	Las carpetas de datos (registros, reportes, exportaciones) contienen datos personales. Protegerlas es responsabilidad del operador.
+The data folders (records, reports, exports) contain personal data. Protecting them is the responsibility of the operator. Passwords (initial and LAPS) are never written to disk.	Las carpetas de datos (registros, reportes, exportaciones) contienen datos personales. Protegerlas es responsabilidad del operador. Las contraseñas (iniciales y de LAPS) nunca se escriben en disco.
+The language changes at the next start.	El idioma cambia en el próximo inicio.
+The LAPS value of this computer is not valid.	El valor LAPS de este equipo no es válido.
 The master OU does not belong to the connected domain: nothing can be changed.	La OU maestra no pertenece al dominio conectado: no se puede modificar nada.
 The master OU does not exist in the directory: nothing can be changed.	La OU maestra no existe en el directorio: no se puede modificar nada.
 The master OU exists in {0} and holds {1} users, computers and groups.	La OU maestra existe en {0} y contiene {1} usuarios, equipos y grupos.
 The master OU is not a valid DN.	La OU maestra no es un DN válido.
 The master OU is not configured: nothing can be changed until it is set in Settings.	La OU maestra no está configurada: no se puede modificar nada hasta definirla en Ajustes.
-The OU is not configured (or it is outside the master OU). Set it in Settings.	La OU no está configurada (o está fuera de la OU maestra). Configúrala en Ajustes.
+The object or the OU does not exist.	El objeto o la OU no existe.
+The OU is not configured (or it is outside the master OU).	La OU no está configurada (o está fuera de la OU maestra).
+The password is encrypted and your Windows session cannot decrypt it (it is not an authorized decryptor).	La contraseña está cifrada y tu sesión de Windows no puede descifrarla (no es un descifrador autorizado).
 Those account flags are not allowed.	Esas opciones de cuenta no están permitidas.
+Too many results; narrow the search.	Demasiados resultados; acota la búsqueda.
+Trademarks	Marcas
+Type a valid computer name (up to 15 letters, digits or '-').	Escribe un nombre de equipo válido (hasta 15 letras, dígitos o '-').
 Type the account and the password.	Escribe la cuenta y la contraseña.
 Type the IP address or the name of a domain controller.	Escribe la IP o el nombre de un controlador de dominio.
 Use LDAPS (certificate)	Usar LDAPS (certificado)
-Used at the next start (the login window proposes it).	Se usa en el próximo inicio (la ventana de conexión lo propone).
+Used at the next start: the login window proposes it.	Se usa en el próximo inicio: la ventana de conexión lo propone.
 Users	Usuarios
 Users OU	OU de usuarios
-Warnings:	Avisos:
+Version {0}	Versión {0}
+Version {0}  ·  {1}	Versión {0}  ·  {1}
+Warnings	Avisos
+Windows LAPS	Windows LAPS
+Windows LAPS (encrypted)	Windows LAPS (cifrado)
 With an IP address Windows usually authenticates with NTLM instead of Kerberos; the connection is still signed and sealed.	Con una IP, Windows suele autenticar con NTLM en lugar de Kerberos; la conexión sigue firmada y sellada.
 With LDAPS and an IP address, the certificate of the DC must include that IP.	Con LDAPS y una IP, el certificado del DC debe incluir esa IP.
+Your account does not have permission for this.	Tu cuenta no tiene permiso para esto.
+{0} days ago	hace {0} días
+{0} not found.	{0} no encontrado.
 {0} objects	{0} objetos
+{0} objects read from {1}.	{0} objetos leídos de {1}.
+{0} of {1} objects	{0} de {1} objetos
+{0}: no password.	{0}: sin contraseña.

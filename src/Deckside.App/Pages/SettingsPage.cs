@@ -12,84 +12,77 @@ namespace Deckside.App.Pages;
 /// inside it (an OU outside it is cleared when saving) and every write is checked against it.
 /// </summary>
 [SupportedOSPlatform("windows")]
-internal sealed class SettingsPage : UserControl
+internal sealed class SettingsPage : Page
 {
-    private readonly AppState state;
-    private readonly Action changed;
-    private readonly ComboBox language = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 160 };
-    private readonly TextBox server = new() { Width = 260 };
-    private readonly NumericUpDown port = new() { Minimum = 0, Maximum = 65535, Width = 90 };
-    private readonly CheckBox ldaps = new() { AutoSize = true };
-    private readonly TextBox domain = new() { Width = 260 };
-    private readonly TextBox masterOu = new() { Width = 560 };
-    private readonly TextBox usersOu = new() { Width = 560 };
-    private readonly TextBox computersOu = new() { Width = 560 };
-    private readonly TextBox disabledOu = new() { Width = 560 };
-    private readonly CheckBox subOus = new() { AutoSize = true };
-    private readonly CheckBox ticket = new() { AutoSize = true };
-    private readonly Label result = new() { AutoSize = true, MaximumSize = new Size(720, 0), Margin = new Padding(0, 8, 0, 0) };
+    private readonly ComboBox language = Make.Combo(["English", "Español"], 0, 200);
+    private readonly TextBox server = Make.Input();
+    private readonly NumericUpDown port = Make.Number(0, 0, 65535);
+    private readonly CheckBox ldaps = Make.Check(S("Use LDAPS (certificate)"));
+    private readonly TextBox domain = Make.Input();
+    private readonly TextBox masterOu = Make.Input(width: 560);
+    private readonly TextBox usersOu = Make.Input(width: 560);
+    private readonly TextBox computersOu = Make.Input(width: 560);
+    private readonly TextBox disabledOu = Make.Input(width: 560);
+    private readonly CheckBox subOus = Make.Check(S("Include sub-OUs of the users and computers OUs"));
+    private readonly CheckBox ticket = Make.Check(S("A ticket is required for every change"));
+    private readonly Banner banner = new();
+    private readonly Label warnings = Make.Note("", Theme.WarningColor);
+    private readonly Card warningsCard = new(S("Warnings"));
 
-    public SettingsPage(AppState state, Action changed)
+    public SettingsPage(MainForm shell)
+        : base(shell, S("Settings"), S("Credentials are never saved. The naming rules of users and computers will be configured here too."))
     {
-        this.state = state;
-        this.changed = changed;
-        AutoScroll = true;
-        language.Items.AddRange(["Español", "English"]);
-        ldaps.Text = S("Use LDAPS (certificate)");
-        subOus.Text = S("Include sub-OUs of the users and computers OUs");
-        ticket.Text = S("A ticket is required for every change");
-        Fill(state.Settings);
+        var list = new CardList();
 
-        var grid = new TableLayoutPanel { ColumnCount = 2, AutoSize = true };
-        void Row(string label, Control control, string? note = null)
-        {
-            grid.Controls.Add(new Label { Text = label, AutoSize = true, Anchor = AnchorStyles.Left, Margin = new Padding(0, 6, 12, 6) });
-            if (note is null)
-            {
-                grid.Controls.Add(control);
-                return;
-            }
+        warningsCard.Add(warnings);
+        list.Add(warningsCard);
 
-            var cell = new FlowLayoutPanel { AutoSize = true, FlowDirection = FlowDirection.TopDown, WrapContents = false, Margin = Padding.Empty };
-            cell.Controls.Add(control);
-            cell.Controls.Add(Theme.Note(note));
-            grid.Controls.Add(cell);
-        }
+        var scope = list.Add(new Card(S("Scope"), S("Nothing is ever created, changed or moved outside the master OU, including group memberships. The other OUs must be inside it.")));
+        var scopeFields = new Fields();
+        scopeFields.Add(S("Master OU"), masterOu);
+        scopeFields.Add(S("Users OU"), usersOu);
+        scopeFields.Add(S("Computers OU"), computersOu);
+        scopeFields.Add(S("Disabled OU"), disabledOu);
+        scopeFields.Add("", subOus);
+        scopeFields.Add("", ticket);
+        scope.Add(scopeFields);
+        masterOu.PlaceholderText = "OU=Managed,DC=example,DC=local";
 
-        Row(S("Language"), language);
-        Row(S("Server (IP or name)"), server, S("Used at the next start (the login window proposes it)."));
-        Row(S("Port"), port);
-        Row("", ldaps);
-        Row(S("Domain"), domain, S("Empty = taken from the master OU."));
-        Row(S("Master OU"), masterOu, S("Nothing is ever created, changed or moved outside this OU, including group memberships."));
-        Row(S("Users OU"), usersOu);
-        Row(S("Computers OU"), computersOu);
-        Row(S("Disabled OU"), disabledOu);
-        Row("", subOus);
-        Row("", ticket);
+        var connection = list.Add(new Card(S("Connection"), S("Used at the next start: the login window proposes it.")));
+        var connectionFields = new Fields();
+        connectionFields.Add(S("Server (IP or name)"), server);
+        connectionFields.Add(S("Port"), Make.Row(port, Make.Note(S("0 = default (389 / 636)"))));
+        connectionFields.Add("", ldaps);
+        connectionFields.Add(S("Domain"), domain);
+        connectionFields.Full(Make.Note(S("Domain: empty = taken from the master OU.")));
+        connection.Add(connectionFields);
 
-        var save = Theme.PrimaryButton(S("Save"));
-        save.Click += (_, _) => Save();
-        var verify = new Button { Text = S("Check the master OU"), AutoSize = true };
-        verify.Click += async (_, _) => await VerifyAsync();
-        var buttons = new FlowLayoutPanel { AutoSize = true };
-        buttons.Controls.AddRange([save, verify]);
+        var general = list.Add(new Card(S("General")));
+        var generalFields = new Fields();
+        generalFields.Add(S("Language"), language);
+        generalFields.Full(Make.Note(S("The language changes at the next start.")));
+        general.Add(generalFields);
 
-        var layout = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, FlowDirection = FlowDirection.TopDown, WrapContents = false };
-        layout.Controls.Add(Theme.Heading(S("Settings")));
-        layout.Controls.Add(Theme.Note(S("Credentials are never saved. The naming rules of users and computers will be configured here too.")));
-        layout.Controls.Add(grid);
-        layout.Controls.Add(buttons);
-        layout.Controls.Add(result);
-        Controls.Add(layout);
-        ShowWarnings(state.Warnings, saved: false);
+        var body = new Panel { Dock = DockStyle.Fill };
+        body.Controls.Add(list);
+        body.Controls.Add(banner);
+        SetBody(body);
+
+        Action(Make.Secondary(S("Check the master OU"), async (_, _) => await VerifyAsync()));
+        Action(Make.Primary(S("Save"), (_, _) => Save()));
+    }
+
+    public override void Activated()
+    {
+        Fill(App.Settings);
+        ShowWarnings(App.Warnings);
     }
 
     private void Fill(AppSettings s)
     {
-        language.SelectedIndex = s.Language == "es" ? 0 : 1;
+        language.SelectedIndex = s.Language == "es" ? 1 : 0;
         server.Text = s.Server;
-        port.Value = s.Port;
+        port.Value = Math.Clamp(s.Port, 0, 65535);
         ldaps.Checked = s.UseLdaps;
         domain.Text = s.Domain;
         masterOu.Text = s.MasterOU;
@@ -102,9 +95,9 @@ internal sealed class SettingsPage : UserControl
 
     private void Save()
     {
-        var updated = state.Settings with
+        var updated = App.Settings with
         {
-            Language = language.SelectedIndex == 1 ? "en" : "es",
+            Language = language.SelectedIndex == 1 ? "es" : "en",
             Server = server.Text.Trim(),
             Port = (int)port.Value,
             UseLdaps = ldaps.Checked,
@@ -118,35 +111,24 @@ internal sealed class SettingsPage : UserControl
         };
         try
         {
-            var warnings = state.Save(updated);
-            Fill(state.Settings);
-            ShowWarnings(warnings, saved: true);
-            changed();
+            var result = App.Save(updated);
+            Fill(App.Settings);
+            ShowWarnings(result);
+            banner.Show(result.Count == 0 ? "✓  " + S("Saved.") : "⚠  " + S("Saved, with warnings (see below)."),
+                result.Count == 0 ? Theme.Success : Theme.WarningColor, result.Count == 0 ? Theme.SuccessSoft : Theme.WarningSoft);
+            Shell.RefreshConnection();
+            Shell.SetStatus(S("Settings saved."));
         }
-        catch (IOException ex)
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
-            result.ForeColor = Theme.Danger;
-            result.Text = F("Could not save the settings: {0}", ex.Message);
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            result.ForeColor = Theme.Danger;
-            result.Text = F("Could not save the settings: {0}", ex.Message);
+            banner.Show("⚠  " + F("Could not save the settings: {0}", ex.Message), Theme.Danger, Theme.DangerSoft);
         }
     }
 
-    private void ShowWarnings(IReadOnlyList<SettingsWarning> warnings, bool saved)
+    private void ShowWarnings(IReadOnlyList<SettingsWarning> items)
     {
-        if (warnings.Count == 0)
-        {
-            result.ForeColor = Theme.Ok;
-            result.Text = saved ? S("Saved.") : "";
-            return;
-        }
-
-        result.ForeColor = Theme.Danger;
-        result.Text = (saved ? S("Saved, with warnings:") : S("Warnings:")) + Environment.NewLine +
-                      string.Join(Environment.NewLine, warnings.Select(w => "• " + Messages.ForWarning(w)));
+        warnings.Text = string.Join(Environment.NewLine, items.Select(w => "•  " + Messages.ForWarning(w)));
+        warningsCard.Visible = items.Count > 0;
     }
 
     private async Task VerifyAsync()
@@ -154,32 +136,33 @@ internal sealed class SettingsPage : UserControl
         var dn = masterOu.Text.Trim();
         if (!DistinguishedName.IsValid(dn))
         {
-            result.ForeColor = Theme.Danger;
-            result.Text = S("The master OU is not a valid DN.");
+            banner.Show("⚠  " + S("The master OU is not a valid DN."), Theme.Danger, Theme.DangerSoft);
             return;
         }
 
-        try
+        var directory = App.Directory;
+        var result = await Shell.RunAsync(S("Checking the master OU..."), token =>
         {
-            var directory = state.Directory;
-            var found = await Task.Run(() => directory.Get(dn, ["objectClass", "description"]));
-            var nc = directory.Info.DefaultNamingContext;
-            var inDomain = nc.Length == 0 || DistinguishedName.AreEqual(dn, nc) || DistinguishedName.IsDescendantOf(dn, nc);
-            if (found is null || !inDomain)
-            {
-                result.ForeColor = Theme.Danger;
-                result.Text = found is null ? Messages.ForCode("MASTER_OU_NOT_FOUND") : Messages.ForCode("MASTER_OU_NOT_IN_DOMAIN");
-                return;
-            }
+            var found = directory.Get(dn, ["objectClass"]);
+            var count = found is null ? 0 : directory.Search(dn, "(|(objectClass=user)(objectClass=group))", SearchDepth.Subtree, ["objectClass"], token).Count;
+            return new Check(found is not null, count);
+        });
+        if (result is null || IsDisposed)
+        {
+            return;
+        }
 
-            var count = await Task.Run(() => directory.Search(dn, "(|(objectClass=user)(objectClass=group))", SearchDepth.Subtree, ["objectClass"]).Count);
-            result.ForeColor = Theme.Ok;
-            result.Text = F("The master OU exists in {0} and holds {1} users, computers and groups.", directory.Info.DomainDns, count);
-        }
-        catch (DirectoryException ex)
+        var nc = directory.Info.DefaultNamingContext;
+        var inDomain = nc.Length == 0 || DistinguishedName.AreEqual(dn, nc) || DistinguishedName.IsDescendantOf(dn, nc);
+        if (!result.Exists || !inDomain)
         {
-            result.ForeColor = Theme.Danger;
-            result.Text = Messages.ForCode(ex.Code) + " " + ex.Detail;
+            banner.Show("⚠  " + Messages.ForCode(result.Exists ? "MASTER_OU_NOT_IN_DOMAIN" : "MASTER_OU_NOT_FOUND"), Theme.Danger, Theme.DangerSoft);
+            return;
         }
+
+        banner.Show("✓  " + F("The master OU exists in {0} and holds {1} users, computers and groups.", directory.Info.DomainDns, result.Count), Theme.Success, Theme.SuccessSoft);
+        Shell.SetStatus(S("Master OU checked."));
     }
+
+    private sealed record Check(bool Exists, int Count);
 }

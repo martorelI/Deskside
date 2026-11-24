@@ -7,11 +7,11 @@ using static Deckside.App.Ui.Text;
 namespace Deckside.App.Pages;
 
 /// <summary>
-/// Read-only list of the users or computers of their OU. Creating comes in phase 3, through the planners
-/// (preview + confirmation) and the guarded directory.
+/// Read-only list of the users or computers of their OU, with a quick filter. Creating comes in a next phase,
+/// through the planners (preview + confirmation) and the guarded directory.
 /// </summary>
 [SupportedOSPlatform("windows")]
-internal sealed class ObjectListPage : UserControl
+internal sealed class ObjectListPage : Page
 {
     public enum Kind
     {
@@ -21,32 +21,21 @@ internal sealed class ObjectListPage : UserControl
 
     private static readonly string[] Attributes = ["sAMAccountName", "displayName", "cn", "userAccountControl", "lastLogonTimestamp", "operatingSystem", "description"];
 
-    private readonly AppState state;
     private readonly Kind kind;
-    private readonly DataGridView grid = new()
-    {
-        Dock = DockStyle.Fill, ReadOnly = true, AllowUserToAddRows = false, AllowUserToDeleteRows = false, RowHeadersVisible = false,
-        AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill, SelectionMode = DataGridViewSelectionMode.FullRowSelect, BackgroundColor = Color.White,
-    };
-    private readonly Label status = new() { AutoSize = true, ForeColor = Theme.Muted, Margin = new Padding(12, 8, 0, 0) };
-    private CancellationTokenSource? loading;
+    private readonly DataGridView grid = Make.Grid();
+    private readonly TextBox filter = Make.Input(width: 320);
+    private readonly Label count = Make.Note("");
+    private readonly Banner notice = new();
+    private readonly Button refresh;
+    private List<string[]> rows = [];
+    private bool loaded;
 
-    public ObjectListPage(AppState state, Kind kind)
+    public ObjectListPage(MainForm shell, Kind kind)
+        : base(shell, kind == Kind.Users ? S("Users") : S("Computers"), "")
     {
-        this.state = state;
         this.kind = kind;
-        var ou = kind == Kind.Users ? state.Settings.UsersOU : state.Settings.ComputersOU;
-
-        var refresh = new Button { Text = S("Refresh"), AutoSize = true };
-        refresh.Click += async (_, _) => await LoadAsync();
-        var create = Theme.PrimaryButton(kind == Kind.Users ? S("New user...") : S("New computer..."));
-        create.Enabled = false; // phase 3
-        var bar = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, Padding = new Padding(0, 0, 0, 8) };
-        bar.Controls.AddRange([create, refresh, status]);
-
-        var head = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, FlowDirection = FlowDirection.TopDown, WrapContents = false };
-        head.Controls.Add(Theme.Heading(kind == Kind.Users ? S("Users") : S("Computers")));
-        head.Controls.Add(Theme.Note(ou.Length > 0 ? F("OU: {0}", ou) : S("The OU is not configured (or it is outside the master OU). Set it in Settings.")));
+        filter.PlaceholderText = S("Filter by account, name or description...");
+        filter.TextChanged += (_, _) => Fill();
 
         grid.Columns.Add("sam", S("Account"));
         grid.Columns.Add("name", S("Name"));
@@ -54,73 +43,98 @@ internal sealed class ObjectListPage : UserControl
         grid.Columns.Add("logon", S("Last logon"));
         grid.Columns.Add("extra", kind == Kind.Users ? S("Description") : S("Operating system"));
         grid.Columns.Add("dn", "DN");
+        grid.Columns["sam"]!.FillWeight = 60;
+        grid.Columns["state"]!.FillWeight = 45;
+        grid.Columns["logon"]!.FillWeight = 50;
+        grid.Columns["dn"]!.FillWeight = 160;
+        grid.CellFormatting += (_, e) =>
+        {
+            if (e.ColumnIndex == 2 && e.Value is string s && e.CellStyle is not null)
+            {
+                e.CellStyle.ForeColor = s == S("Disabled") ? Theme.Muted : Theme.Success;
+            }
+        };
 
-        Controls.Add(grid);
-        Controls.Add(bar);
-        Controls.Add(head);
-        if (ou.Length > 0)
-        {
-            Load += async (_, _) => await LoadAsync();
-        }
-        else
-        {
-            refresh.Enabled = false;
-        }
+        var top = new Panel { Dock = DockStyle.Top, Height = 44, BackColor = Theme.Background };
+        var topRow = Make.Row(filter, count);
+        count.Margin = new Padding(12, 8, 0, 0);
+        topRow.Dock = DockStyle.Fill;
+        top.Controls.Add(topRow);
+        var frame = new Panel { Dock = DockStyle.Fill, BackColor = Theme.Border, Padding = new Padding(1) };
+        frame.Controls.Add(grid);
+        var body = new Panel { Dock = DockStyle.Fill, BackColor = Theme.Background, Padding = new Padding(24, 16, 24, 16) };
+        body.Controls.Add(frame);
+        body.Controls.Add(notice);
+        body.Controls.Add(top);
+        SetBody(body);
+
+        refresh = Action(Make.Secondary(S("Refresh"), async (_, _) => await LoadAsync()));
+        var create = Action(Make.Primary(kind == Kind.Users ? S("New user...") : S("New computer...")));
+        create.Enabled = false; // next phase
     }
 
-    protected override void Dispose(bool disposing)
+    private string Ou => kind == Kind.Users ? App.Settings.UsersOU : App.Settings.ComputersOU;
+
+    public override async void Activated()
     {
-        if (disposing)
+        SetDescription(Ou.Length > 0 ? F("Read only. OU: {0}", Ou) : S("The OU is not configured (or it is outside the master OU)."));
+        notice.Show(Ou.Length > 0 ? null : S("Set the OU in Settings to see its objects."), Theme.WarningColor, Theme.WarningSoft);
+        refresh.Enabled = Ou.Length > 0;
+        if (!loaded && Ou.Length > 0)
         {
-            loading?.Cancel();
-            loading?.Dispose();
+            await LoadAsync();
         }
-
-        base.Dispose(disposing);
     }
+
+    protected override void UpdateButtons() => refresh.Enabled = Ou.Length > 0 && !Shell.Busy;
 
     private async Task LoadAsync()
     {
-        loading?.Cancel();
-        loading = new CancellationTokenSource();
-        var token = loading.Token;
-        var ou = kind == Kind.Users ? state.Settings.UsersOU : state.Settings.ComputersOU;
-        var filter = kind == Kind.Users ? LdapFilter.Users : LdapFilter.Computers;
-        var depth = state.Settings.IncludeSubOUs ? SearchDepth.Subtree : SearchDepth.OneLevel;
-        status.Text = S("Reading...");
-        try
+        var ou = Ou;
+        if (ou.Length == 0)
         {
-            var objects = await Task.Run(() => state.Directory.Search(ou, filter, depth, Attributes, token), token);
-            if (IsDisposed)
-            {
-                return;
-            }
+            return;
+        }
 
-            grid.Rows.Clear();
-            foreach (var o in objects.OrderBy(o => o.SamAccountName, StringComparer.OrdinalIgnoreCase))
-            {
-                var disabled = o.AccountControl.HasFlag(UserAccountControl.AccountDisable);
-                var logon = AdTime.FromFileTime(o.Get("lastLogonTimestamp"));
-                grid.Rows.Add(
-                    o.SamAccountName ?? "",
-                    o.Get("displayName") ?? o.Get("cn") ?? "",
-                    disabled ? S("Disabled") : S("Enabled"),
-                    logon?.ToLocalTime().ToString("yyyy-MM-dd", Culture) ?? "-",
-                    (kind == Kind.Users ? o.Get("description") : o.Get("operatingSystem")) ?? "",
-                    o.Dn);
-            }
+        var filterText = kind == Kind.Users ? LdapFilter.Users : LdapFilter.Computers;
+        var depth = App.Settings.IncludeSubOUs ? SearchDepth.Subtree : SearchDepth.OneLevel;
+        var directory = App.Directory;
+        var objects = await Shell.RunAsync(S("Reading the directory..."), token => directory.Search(ou, filterText, depth, Attributes, token));
+        if (objects is null || IsDisposed)
+        {
+            return;
+        }
 
-            status.Text = F("{0} objects", objects.Count);
-        }
-        catch (OperationCanceledException)
+        loaded = true;
+        rows = [.. objects.OrderBy(o => o.SamAccountName, StringComparer.OrdinalIgnoreCase).Select(o => new[]
         {
-        }
-        catch (DirectoryException ex)
+            o.SamAccountName ?? "",
+            o.Get("displayName") ?? o.Get("cn") ?? "",
+            o.AccountControl.HasFlag(UserAccountControl.AccountDisable) ? S("Disabled") : S("Enabled"),
+            AdTime.FromFileTime(o.Get("lastLogonTimestamp"))?.ToLocalTime().ToString("yyyy-MM-dd", Culture) ?? "—",
+            (kind == Kind.Users ? o.Get("description") : o.Get("operatingSystem")) ?? "",
+            o.Dn,
+        })];
+        Fill();
+        Shell.SetStatus(F("{0} objects read from {1}.", rows.Count, ou));
+    }
+
+    private void Fill()
+    {
+        var text = filter.Text.Trim();
+        grid.SuspendLayout();
+        grid.Rows.Clear();
+        var shown = 0;
+        foreach (var r in rows)
         {
-            if (!IsDisposed)
+            if (text.Length == 0 || r.Take(5).Any(v => v.Contains(text, StringComparison.OrdinalIgnoreCase)))
             {
-                status.Text = Messages.ForCode(ex.Code) + " " + ex.Detail;
+                grid.Rows.Add(r);
+                shown++;
             }
         }
+
+        grid.ResumeLayout();
+        count.Text = text.Length == 0 ? F("{0} objects", rows.Count) : F("{0} of {1} objects", shown, rows.Count);
     }
 }

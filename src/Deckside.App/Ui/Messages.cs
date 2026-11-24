@@ -18,6 +18,9 @@ internal static class Messages
         "OUTSIDE_MASTER_OU" => Text.S("Outside the master OU: Deckside does not change it."),
         "ATTRIBUTE_FORBIDDEN" => Text.S("Deckside never changes that attribute."),
         "UAC_FORBIDDEN" => Text.S("Those account flags are not allowed."),
+        "LDAP_NOSUCHOBJECT" => Text.S("The object or the OU does not exist."),
+        "LDAP_INSUFFICIENTACCESSRIGHTS" => Text.S("Your account does not have permission for this."),
+        "LDAP_SIZELIMITEXCEEDED" => Text.S("Too many results; narrow the search."),
         _ => code,
     };
 
