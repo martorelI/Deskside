@@ -11,7 +11,7 @@ public class SettingsTests
     {
         var r = SettingsLoader.Parse("");
         Assert.Empty(r.Warnings);
-        Assert.Equal("es", r.Settings.Language);
+        Assert.Equal("en", r.Settings.Language);
         Assert.Equal("U{seq:5}", r.Settings.Naming.SamPattern);
     }
 
@@ -43,7 +43,7 @@ public class SettingsTests
         Assert.Contains("DefaultComputerGroups:INVALID_ITEM", keys);
         Assert.Contains("Password:INVALID_TYPE", keys);
         Assert.Contains("Mystery:UNKNOWN_KEY", keys);
-        Assert.Equal("es", r.Settings.Language);
+        Assert.Equal("en", r.Settings.Language);
         Assert.Equal("", r.Settings.UsersOU);
         Assert.Equal(5, r.Settings.Naming.SamFirstNumber);
         Assert.Equal(90, r.Settings.Report.InactiveDays);

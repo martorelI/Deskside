@@ -87,7 +87,7 @@ internal sealed class SettingsPage : UserControl
 
     private void Fill(AppSettings s)
     {
-        language.SelectedIndex = s.Language == "en" ? 1 : 0;
+        language.SelectedIndex = s.Language == "es" ? 0 : 1;
         server.Text = s.Server;
         port.Value = s.Port;
         ldaps.Checked = s.UseLdaps;

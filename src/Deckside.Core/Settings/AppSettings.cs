@@ -7,7 +7,7 @@ namespace Deckside.Core.Settings;
 /// </summary>
 public sealed record AppSettings
 {
-    public string Language { get; init; } = "es";
+    public string Language { get; init; } = "en";
 
     /// <summary>Folder for settings, evidence and reports. Empty = next to Deckside.exe.</summary>
     public string DataFolder { get; init; } = "";
