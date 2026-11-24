@@ -1,0 +1,37 @@
+# ---- Directory data and evidence: NEVER commit it ----
+# Folders the app creates next to Deckside.exe (default names; if you change them in settings.json, add them)
+# (anchored to the root so they don't hide code folders with the same name, such as src/Deckside.Core/Settings)
+/Settings/
+/Users/
+/Computers/
+/Offboarding/
+/Reports/
+/Profiles/
+/Logs/
+settings.json
+profiles.json
+*.xlsx
+*.csv
+!tests/fixtures/**/*.csv
+*.log
+Report_*.html
+USER_*/
+COMPUTER_*/
+OFFBOARD_*/
+PROFILE_*/
+
+# ---- Tests ----
+tests/out/
+
+# ---- Build output ----
+*.exe
+bin/
+obj/
+publish/
+*.user
+.vs/
+*.suo
+
+# ---- Misc ----
+.DS_Store
+Thumbs.db
