@@ -6,7 +6,7 @@ namespace Deckside.Directory;
 /// <summary>Converts the binary attributes Deckside reads into the text form used by <c>DirectoryObject</c>.</summary>
 public static class BinaryValues
 {
-    public static readonly IReadOnlyList<string> BinaryAttributes = ["objectSid", "objectGUID", "tokenGroups"];
+    public static readonly IReadOnlyList<string> BinaryAttributes = ["objectSid", "objectGUID", "tokenGroups", "msLAPS-EncryptedPassword"];
 
     public static bool IsBinary(string attribute) => BinaryAttributes.Contains(attribute, StringComparer.OrdinalIgnoreCase);
 
@@ -33,8 +33,9 @@ public static class BinaryValues
         return sb.ToString();
     }
 
+    /// <summary>GUID text, SID text, or base64 for other binary values (the encrypted LAPS blob).</summary>
     public static string ToText(string attribute, byte[] value) =>
-        string.Equals(attribute, "objectGUID", StringComparison.OrdinalIgnoreCase)
-            ? new Guid(value).ToString()
-            : SidToString(value);
+        string.Equals(attribute, "objectGUID", StringComparison.OrdinalIgnoreCase) ? new Guid(value).ToString()
+        : string.Equals(attribute, "objectSid", StringComparison.OrdinalIgnoreCase) || string.Equals(attribute, "tokenGroups", StringComparison.OrdinalIgnoreCase) ? SidToString(value)
+        : Convert.ToBase64String(value);
 }
